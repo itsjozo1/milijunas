@@ -11,7 +11,9 @@ import android.widget.TextView;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.HashSet;
 import java.util.Random;
+import java.util.Set;
 
 public class GameActivity extends AppCompatActivity {
     TextView tvQuestion;
@@ -19,6 +21,8 @@ public class GameActivity extends AppCompatActivity {
     Connection connect;
     String ConnectionResult="";
     public String correctAnswer="";
+    Set<Integer> uniqueNumbers = new HashSet<>();
+    public int j;
 
 
     @Override
@@ -27,7 +31,8 @@ public class GameActivity extends AppCompatActivity {
         setContentView(R.layout.activity_game);
         Intent intent = getIntent();
             btnNext=(Button) findViewById(R.id.btnNext);
-
+            uniqueNumbers.clear();
+            j=1;
             sqlGetText();
 
 
@@ -36,9 +41,21 @@ public class GameActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View view) {
                     btnNext.setVisibility(View.INVISIBLE);
-                    sqlGetText();
+                    j++;
+                    if(j<5){
+                        sqlGetText();
+                    }
+                    else{
+                        tvQuestion.setText("you won");
+                        btnA.setClickable(false);
+                        btnB.setClickable(false);
+                        btnC.setClickable(false);
+                        btnD.setClickable(false);
+
+                    }
                 }
             });
+
 
     }
 
@@ -49,8 +66,17 @@ public class GameActivity extends AppCompatActivity {
     }
 
     public void sqlGetText(){
-        Random r = new Random();
-        int rand = r.nextInt(4)+1;
+        int rand = 0;
+        Random random = new Random();
+
+
+            int randomNumber = random.nextInt(10) + 1;
+            while (uniqueNumbers.contains(randomNumber)) {
+                randomNumber = random.nextInt(10) + 1;
+            }
+            uniqueNumbers.add(randomNumber);
+            rand=randomNumber;
+
         tvQuestion= (TextView) findViewById(R.id.tvQuestion);
         btnA = (Button) findViewById(R.id.btnA);
         btnB = (Button) findViewById(R.id.btnB);

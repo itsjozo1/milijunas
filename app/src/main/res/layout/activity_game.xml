@@ -4,25 +4,29 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/pozadina"
     tools:context=".GameActivity">
 
     <TextView
         android:id="@+id/tvQuestion"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="180dp"
+        android:layout_width="343dp"
+        android:layout_height="63dp"
+        android:layout_marginTop="196dp"
+        android:gravity="center"
         android:text="TextView"
+        android:textColor="#FFFDFD"
+        android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/btnA"
         android:layout_width="150dp"
-        android:layout_height="50dp"
+        android:layout_height="48dp"
         android:layout_marginStart="24dp"
-        android:layout_marginTop="76dp"
+        android:layout_marginTop="88dp"
+        android:backgroundTint="#02304E"
         android:text="Button"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvQuestion" />
@@ -32,6 +36,7 @@
         android:layout_width="150dp"
         android:layout_height="50dp"
         android:layout_marginEnd="24dp"
+        android:backgroundTint="#02304E"
         android:text="Button"
         app:layout_constraintBaseline_toBaselineOf="@+id/btnA"
         app:layout_constraintEnd_toEndOf="parent" />
@@ -40,6 +45,7 @@
         android:id="@+id/btnD"
         android:layout_width="150dp"
         android:layout_height="50dp"
+        android:backgroundTint="#02304E"
         android:text="Button"
         app:layout_constraintBaseline_toBaselineOf="@+id/btnC"
         app:layout_constraintStart_toStartOf="@+id/btnB" />
@@ -49,6 +55,7 @@
         android:layout_width="150dp"
         android:layout_height="50dp"
         android:layout_marginTop="44dp"
+        android:backgroundTint="#02304E"
         android:text="Button"
         app:layout_constraintStart_toStartOf="@+id/btnA"
         app:layout_constraintTop_toBottomOf="@+id/btnA" />
@@ -57,11 +64,25 @@
         android:id="@+id/btnNext"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="76dp"
-        android:text="Next"
+        android:layout_marginTop="56dp"
+        android:backgroundTint="#D1B000"
+        android:text="Sljedeće pitanje"
         android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnD" />
+
+    <TextView
+        android:id="@+id/tvPrize"
+        android:layout_width="180dp"
+        android:layout_height="21dp"
+        android:layout_marginBottom="28dp"
+        android:gravity="center"
+        android:text="TextView"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@+id/tvQuestion"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

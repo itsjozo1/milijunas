@@ -5,6 +5,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -16,42 +18,52 @@ import java.util.Random;
 import java.util.Set;
 
 public class GameActivity extends AppCompatActivity {
-    TextView tvQuestion;
+    TextView tvQuestion, tvPrize;
     Button btnA, btnB, btnC, btnD, btnNext;
     Connection connect;
     String ConnectionResult="";
     public String correctAnswer="";
     Set<Integer> uniqueNumbers = new HashSet<>();
     public int j;
+    public String[] prizes = {"500$", "1,000$", "2,000$", "3,000$", "5,000$", "7,000$", "10,000$"
+            , "20,000$", "30,000$", "50,000$", "100,000$", "250,000$", "500,000$", "1,000,000$" };
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        getSupportActionBar().hide();
+
         setContentView(R.layout.activity_game);
+        tvPrize=(TextView)findViewById(R.id.tvPrize);
         Intent intent = getIntent();
+
             btnNext=(Button) findViewById(R.id.btnNext);
             uniqueNumbers.clear();
-            j=1;
+            j=0;
+            tvPrize.setText(prizes[j]);
             sqlGetText();
-
-
 
             btnNext.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    btnA.setBackgroundColor(getResources().getColor(R.color.gradient));
+                    btnB.setBackgroundColor(getResources().getColor(R.color.gradient));
+                    btnC.setBackgroundColor(getResources().getColor(R.color.gradient));
+                    btnD.setBackgroundColor(getResources().getColor(R.color.gradient));
                     btnNext.setVisibility(View.INVISIBLE);
                     j++;
-                    if(j<5){
+                    tvPrize.setText(prizes[j]);
+                    if(j<14){
                         sqlGetText();
                     }
                     else{
                         tvQuestion.setText("you won");
-                        btnA.setClickable(false);
-                        btnB.setClickable(false);
-                        btnC.setClickable(false);
-                        btnD.setClickable(false);
-
+                        btnNext.setVisibility(View.INVISIBLE);
+                        disableClickable();
                     }
                 }
             });
@@ -121,11 +133,14 @@ public class GameActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if(CORRECT.equals("A")){
-                    tvQuestion.setText("CORRECT");
+                    tvQuestion.setText("Točan odgovor");
                     btnNext.setVisibility(View.VISIBLE);
+                    btnA.setBackgroundColor(getResources().getColor(R.color.correct));
                 }
                 else{
-                    tvQuestion.setText("INCORRECT");
+                    tvQuestion.setText("Netočan odgovor");
+                    btnA.setBackgroundColor(getResources().getColor(R.color.incorrect));
+                    highlightCorrect(correctAnswer);
                 }
             }
         });
@@ -133,11 +148,15 @@ public class GameActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if(CORRECT.equals("B")){
-                    tvQuestion.setText("CORRECT");
+                    tvQuestion.setText("Točan odgovor");
                     btnNext.setVisibility(View.VISIBLE);
+                    btnB.setBackgroundColor(getResources().getColor(R.color.correct));
+
                 }
                 else{
-                    tvQuestion.setText("INCORRECT");
+                    tvQuestion.setText("Netočan odgovor");
+                    btnB.setBackgroundColor(getResources().getColor(R.color.incorrect));
+                    highlightCorrect(correctAnswer);
                 }
             }
         });
@@ -145,11 +164,16 @@ public class GameActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if(CORRECT.equals("C")){
-                    tvQuestion.setText("CORRECT");
+                    tvQuestion.setText("Točan odgovor");
                     btnNext.setVisibility(View.VISIBLE);
+                    btnC.setBackgroundColor(getResources().getColor(R.color.correct));
+
                 }
                 else{
-                    tvQuestion.setText("INCORRECT");
+                    tvQuestion.setText("Netočan odgovor");
+                    btnC.setBackgroundColor(getResources().getColor(R.color.incorrect));
+                    highlightCorrect(correctAnswer);
+
                 }
             }
         });
@@ -157,15 +181,44 @@ public class GameActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if(CORRECT.equals("D")){
-                    tvQuestion.setText("CORRECT");
+                    tvQuestion.setText("Točan odgovor");
                     btnNext.setVisibility(View.VISIBLE);
+                    btnD.setBackgroundColor(getResources().getColor(R.color.correct));
+
                 }
                 else{
-                    tvQuestion.setText("INCORRECT");
+                    tvQuestion.setText("Netočan odgovor");
+                    btnD.setBackgroundColor(getResources().getColor(R.color.incorrect));
+                    highlightCorrect(correctAnswer);
+
                 }
             }
         });
 
+    }
+    public void disableClickable(){
+        btnA.setClickable(false);
+        btnB.setClickable(false);
+        btnC.setClickable(false);
+        btnD.setClickable(false);
+    }
+    public void highlightCorrect(String CORRECT){
+        if(CORRECT.equals("A")){
+            btnA.setBackgroundColor(getResources().getColor(R.color.correct));
+            disableClickable();
+        }
+        else if (CORRECT.equals("B")){
+            btnB.setBackgroundColor(getResources().getColor(R.color.correct));
+            disableClickable();
+        }
+        else if (CORRECT.equals("C")){
+            btnC.setBackgroundColor(getResources().getColor(R.color.correct));
+            disableClickable();
+        }
+        else if (CORRECT.equals("D")){
+            btnD.setBackgroundColor(getResources().getColor(R.color.correct));
+            disableClickable();
+        }
     }
 
 }

@@ -24,7 +24,7 @@ public class GameActivity extends AppCompatActivity {
     String ConnectionResult="";
     public String correctAnswer="";
     Set<Integer> uniqueNumbers = new HashSet<>();
-    public int j;
+    public int j=0;
     public String[] prizes = {"500$", "1,000$", "2,000$", "3,000$", "5,000$", "7,000$", "10,000$"
             , "20,000$", "30,000$", "50,000$", "100,000$", "250,000$", "500,000$", "1,000,000$" };
 
@@ -43,7 +43,7 @@ public class GameActivity extends AppCompatActivity {
 
             btnNext=(Button) findViewById(R.id.btnNext);
             uniqueNumbers.clear();
-            j=0;
+
             tvPrize.setText(prizes[j]);
             sqlGetText();
 
@@ -57,14 +57,7 @@ public class GameActivity extends AppCompatActivity {
                     btnNext.setVisibility(View.INVISIBLE);
                     j++;
                     tvPrize.setText(prizes[j]);
-                    if(j<14){
-                        sqlGetText();
-                    }
-                    else{
-                        tvQuestion.setText("you won");
-                        btnNext.setVisibility(View.INVISIBLE);
-                        disableClickable();
-                    }
+                    sqlGetText();
                 }
             });
 
@@ -82,9 +75,9 @@ public class GameActivity extends AppCompatActivity {
         Random random = new Random();
 
 
-            int randomNumber = random.nextInt(10) + 1;
+            int randomNumber = random.nextInt(25) + 1;
             while (uniqueNumbers.contains(randomNumber)) {
-                randomNumber = random.nextInt(10) + 1;
+                randomNumber = random.nextInt(25) + 1;
             }
             uniqueNumbers.add(randomNumber);
             rand=randomNumber;
@@ -133,14 +126,17 @@ public class GameActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if(CORRECT.equals("A")){
-                    tvQuestion.setText("Točan odgovor");
-                    btnNext.setVisibility(View.VISIBLE);
-                    btnA.setBackgroundColor(getResources().getColor(R.color.correct));
+                    if(j<13) {
+                        tvQuestion.setText("Točan odgovor");
+                        btnNext.setVisibility(View.VISIBLE);
+                        btnA.setBackgroundColor(getResources().getColor(R.color.correct));
+                    }
+                    else{
+                        wongame();
+                    }
                 }
                 else{
-                    tvQuestion.setText("Netočan odgovor");
-                    btnA.setBackgroundColor(getResources().getColor(R.color.incorrect));
-                    highlightCorrect(correctAnswer);
+                    questionCheck();
                 }
             }
         });
@@ -148,15 +144,17 @@ public class GameActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if(CORRECT.equals("B")){
-                    tvQuestion.setText("Točan odgovor");
-                    btnNext.setVisibility(View.VISIBLE);
-                    btnB.setBackgroundColor(getResources().getColor(R.color.correct));
-
+                    if(j<13) {
+                        tvQuestion.setText("Točan odgovor");
+                        btnNext.setVisibility(View.VISIBLE);
+                        btnB.setBackgroundColor(getResources().getColor(R.color.correct));
+                    }
+                    else{
+                        wongame();
+                    }
                 }
                 else{
-                    tvQuestion.setText("Netočan odgovor");
-                    btnB.setBackgroundColor(getResources().getColor(R.color.incorrect));
-                    highlightCorrect(correctAnswer);
+                    questionCheck();
                 }
             }
         });
@@ -164,15 +162,17 @@ public class GameActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if(CORRECT.equals("C")){
-                    tvQuestion.setText("Točan odgovor");
-                    btnNext.setVisibility(View.VISIBLE);
-                    btnC.setBackgroundColor(getResources().getColor(R.color.correct));
-
+                    if(j<13) {
+                        tvQuestion.setText("Točan odgovor");
+                        btnNext.setVisibility(View.VISIBLE);
+                        btnC.setBackgroundColor(getResources().getColor(R.color.correct));
+                    }
+                    else{
+                        wongame();
+                    }
                 }
                 else{
-                    tvQuestion.setText("Netočan odgovor");
-                    btnC.setBackgroundColor(getResources().getColor(R.color.incorrect));
-                    highlightCorrect(correctAnswer);
+                    questionCheck();
 
                 }
             }
@@ -181,15 +181,17 @@ public class GameActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if(CORRECT.equals("D")){
-                    tvQuestion.setText("Točan odgovor");
-                    btnNext.setVisibility(View.VISIBLE);
-                    btnD.setBackgroundColor(getResources().getColor(R.color.correct));
-
+                    if(j<13) {
+                        tvQuestion.setText("Točan odgovor");
+                        btnNext.setVisibility(View.VISIBLE);
+                        btnD.setBackgroundColor(getResources().getColor(R.color.correct));
+                    }
+                    else{
+                        wongame();
+                    }
                 }
                 else{
-                    tvQuestion.setText("Netočan odgovor");
-                    btnD.setBackgroundColor(getResources().getColor(R.color.incorrect));
-                    highlightCorrect(correctAnswer);
+                    questionCheck();
 
                 }
             }
@@ -218,6 +220,32 @@ public class GameActivity extends AppCompatActivity {
         else if (CORRECT.equals("D")){
             btnD.setBackgroundColor(getResources().getColor(R.color.correct));
             disableClickable();
+        }
+    }
+    public void wongame(){
+        tvQuestion.setText("Čestitamo postali ste milijunaš!");
+        btnA.setBackgroundColor(getResources().getColor(R.color.gold));
+        btnB.setBackgroundColor(getResources().getColor(R.color.gold));
+        btnC.setBackgroundColor(getResources().getColor(R.color.gold));
+        btnD.setBackgroundColor(getResources().getColor(R.color.gold));
+        btnNext.setVisibility(View.INVISIBLE);
+        disableClickable();
+    }
+    public void questionCheck(){
+        if(j<4){
+            tvQuestion.setText("Netočan odgovor");
+            btnD.setBackgroundColor(getResources().getColor(R.color.incorrect));
+            highlightCorrect(correctAnswer);
+        }
+        else if(4<j && j<9){
+            tvQuestion.setText("Čestitamo osvojili ste " + prizes[4]);
+            btnD.setBackgroundColor(getResources().getColor(R.color.incorrect));
+            highlightCorrect(correctAnswer);
+        }
+        else if(9<j && j<13){
+            tvQuestion.setText("Čestitamo osvojili ste " + prizes[9]);
+            btnD.setBackgroundColor(getResources().getColor(R.color.incorrect));
+            highlightCorrect(correctAnswer);
         }
     }
 

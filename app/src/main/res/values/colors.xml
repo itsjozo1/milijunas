@@ -10,4 +10,5 @@
     <color name="correct">#50C878</color>
     <color name="incorrect">#C70039</color>
     <color name="gradient">#02304E</color>
+    <color name="gold">#D1B000</color>
 </resources>

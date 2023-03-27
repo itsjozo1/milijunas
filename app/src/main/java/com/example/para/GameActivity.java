@@ -136,6 +136,7 @@ public class GameActivity extends AppCompatActivity {
                     }
                 }
                 else{
+                    btnA.setBackgroundColor(getResources().getColor(R.color.incorrect));
                     questionCheck();
                 }
             }
@@ -154,6 +155,7 @@ public class GameActivity extends AppCompatActivity {
                     }
                 }
                 else{
+                    btnB.setBackgroundColor(getResources().getColor(R.color.incorrect));
                     questionCheck();
                 }
             }
@@ -172,6 +174,7 @@ public class GameActivity extends AppCompatActivity {
                     }
                 }
                 else{
+                    btnC.setBackgroundColor(getResources().getColor(R.color.incorrect));
                     questionCheck();
 
                 }
@@ -191,6 +194,7 @@ public class GameActivity extends AppCompatActivity {
                     }
                 }
                 else{
+                    btnD.setBackgroundColor(getResources().getColor(R.color.incorrect));
                     questionCheck();
 
                 }
@@ -234,17 +238,14 @@ public class GameActivity extends AppCompatActivity {
     public void questionCheck(){
         if(j<4){
             tvQuestion.setText("Netočan odgovor");
-            btnD.setBackgroundColor(getResources().getColor(R.color.incorrect));
             highlightCorrect(correctAnswer);
         }
         else if(4<j && j<9){
             tvQuestion.setText("Čestitamo osvojili ste " + prizes[4]);
-            btnD.setBackgroundColor(getResources().getColor(R.color.incorrect));
             highlightCorrect(correctAnswer);
         }
         else if(9<j && j<13){
             tvQuestion.setText("Čestitamo osvojili ste " + prizes[9]);
-            btnD.setBackgroundColor(getResources().getColor(R.color.incorrect));
             highlightCorrect(correctAnswer);
         }
     }

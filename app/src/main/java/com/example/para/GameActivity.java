@@ -3,6 +3,8 @@ package com.example.para;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
@@ -88,32 +90,29 @@ public class GameActivity extends AppCompatActivity {
         btnC = (Button) findViewById(R.id.btnC);
         btnD = (Button) findViewById(R.id.btnD);
 
-        try {
-            ConnectionHelper connectionHelper = new ConnectionHelper();
-            connect = connectionHelper.connectionclass();
-            if(connect!=null){
-                String query = " Select * from Pitanja where ID='"+rand+"'";
-                Statement st=connect.createStatement();
-                ResultSet rs= st.executeQuery(query);
+        DatabaseHelper databaseHelper = new DatabaseHelper(this);
 
-                while (rs.next()){
-                    tvQuestion.setText(rs.getString(2));
-                    btnA.setText(rs.getString(3));
-                    btnB.setText(rs.getString(4));
-                    btnC.setText(rs.getString(5));
-                    btnD.setText(rs.getString(6));
-                    correctAnswer=rs.getString(7);
+        SQLiteDatabase db = databaseHelper.getReadableDatabase();
 
-                }
-            }
-            else{
-                ConnectionResult="Check Connection";
-            }
+        String[] columns = {"pitanje, OdgovorA, OdgovorB, OdgovorC, OdgovorD, TocanOdgovor"};
+
+        String selection = "id=?";
+        String[] selectionArgs = {String.valueOf(rand)};
+
+        Cursor rs = db.query("pitanja", columns, selection, selectionArgs, null, null, null);
+
+        if (rs.moveToFirst()) {
+            tvQuestion.setText(rs.getString(0));
+            btnA.setText(rs.getString(1));
+            btnB.setText(rs.getString(2));
+            btnC.setText(rs.getString(3));
+            btnD.setText(rs.getString(4));
+            correctAnswer=rs.getString(5);
         }
-        catch (Exception ex){
 
-        }
-        gotAnswer(correctAnswer);
+                rs.close();
+                db.close();
+                gotAnswer(correctAnswer);
     }
     public void gotAnswer(String CORRECT){
         btnA = (Button) findViewById(R.id.btnA);

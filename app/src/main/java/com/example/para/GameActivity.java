@@ -233,11 +233,11 @@ public class GameActivity extends AppCompatActivity {
         disableClickable();
     }
     public void questionCheck(){
-        if(j<4){
+        if(j<=4){
             tvQuestion.setText("Netočan odgovor");
             highlightCorrect(correctAnswer);
         }
-        else if(4<j && j<9){
+        else if(4<j && j<=9){
             tvQuestion.setText("Čestitamo osvojili ste " + prizes[4]);
             highlightCorrect(correctAnswer);
         }

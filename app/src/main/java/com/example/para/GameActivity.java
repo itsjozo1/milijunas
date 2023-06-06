@@ -22,8 +22,6 @@ import java.util.Set;
 public class GameActivity extends AppCompatActivity {
     TextView tvQuestion, tvPrize;
     Button btnA, btnB, btnC, btnD, btnNext;
-    Connection connect;
-    String ConnectionResult="";
     public String correctAnswer="";
     Set<Integer> uniqueNumbers = new HashSet<>();
     public int j=0;
